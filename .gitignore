@@ -1,0 +1,3 @@
+.pytest_cache
+src/pharma_adherence/__pycache__/
+tests/__pycache__/
