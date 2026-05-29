@@ -1,0 +1,9 @@
+matplotlib
+pandas
+numpy
+scikit-learn
+
+[dev]
+pytest
+setuptools
+wheels
