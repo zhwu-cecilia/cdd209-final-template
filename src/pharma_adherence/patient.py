@@ -7,23 +7,23 @@ class PatientAdherenceProfile:
 
     def total_fills(self):
         #TODO: Calculate and return the total number of fills?
-        pass
+        return len(self.df)
 
     def average_copay(self):
         #TODO: Calculate and return the average copay_amount
-        pass
+        return self.df["copay_amount"].mean()
 
     def average_days_supply(self):
         #TODO: Calculate and return the average days_supply
-        pass
+        return self.df["days_supply"].mean()
 
     def calculate_pdc(self):
         #TODO: Calculate and return the average proportion_days_covered (pdc)
-        pass
+        return self.df["proportion_days_covered"].mean()
 
     def is_adherent(self, threshold=0.75):
         #TODO: Return True if average pdc meets the adherence threshold provided
-        pass
+        return self.calculate_pdc()>= threshold
 
     def summary(self):
         return {

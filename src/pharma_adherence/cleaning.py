@@ -76,7 +76,10 @@ def clean_prescription_data(df: pd.DataFrame) -> pd.DataFrame:
     df["prescriber_id"] = _clean_text_series(df["prescriber_id"]).str.upper()
 
     #TODO: pharmacy_name
-
+    df["pharmacy_name"] = _clean_text_series(df["pharmacy_name"])
+    df["pharmacy_name"] = df["pharmacy_name"].str.replace(r"#\d+$", "", regex=True).str.strip()
+    df["pharmacy_name"] = df["pharmacy_name"].replace({"csv pharmacy" : "cvs", "csv":"cvs", "walgreens pharmacy" : "walgreens", "cvs pharmacy" : "cvs"})
+    
     #TODO: copay_amount
     df["copay_amount"] = _to_numeric_clean(df["copay_amount"])
     df.loc[df["copay_amount"] < 0, "copay_amount"] = np.nan
@@ -87,15 +90,19 @@ def clean_prescription_data(df: pd.DataFrame) -> pd.DataFrame:
 
     #TODO: proportion_days_covered (pdc)
     df["proportion_days_covered"] = _to_numeric_clean(df["proportion_days_covered"])
-    df.loc[0 < df["proportion_days_covered"] < 1, "proportion_days_covered"] = np.nan
+    df.loc[(df["proportion_days_covered"] < 0) | (df["proportion_days_covered"] > 1)] = np.nan
 
     #########################
 
     #TODO: Drop all duplicate rows
+    df = df.drop_duplicates()
 
     #TODO: Drop rows if missing critical fields: "patient_id", "fill_date", "drug_name"
-
+    critical_cols = ["patient_id", "fill_date", "drug_name"]
+    df.dropna(subset=critical_cols)
     #TODO: Sort by "patient_id", "fill_date"
+    sort_cols = ["patient_id", "fill_date"]
+    df = df.sort_values(sort_cols)
 
     df = df.reset_index(drop=True)
 
