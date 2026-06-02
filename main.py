@@ -16,11 +16,11 @@ dataset.save("data/processed/prescriptions_large_cleaned.csv")
 
 #TODO: Visualize the cleaned data
 
-"""
+
 dataset.hist("drug_name").show()
 dataset.bar("drug_name", "proportion_days_covered").show()
 dataset.scatter("patient_age", "proportion_days_covered").show()
-"""
+
 #TODO: Look at the summary of a patient
 patient = dataset.get_patient("P007")
 print(patient.summary())
@@ -30,13 +30,18 @@ DAY 2: MACHINE LEARNING
 
 #TODO: Instantiate a linear regression trainer
 linear_model = ModelTrainer(dataset.df, "proportion_days_covered", ["sex", "copay_amount"])
+
 #TODO: Train the linear model
 model, metrics = linear_model.train_linear()
 
 #TODO: Print the linear model metrics
 print(metrics)
+
 #TODO: Instantiate a logistic regression trainer
+logistic_model = ModelTrainer(dataset.df, "adherence_flag", ["sex", "copay_amount"])
 
 #TODO: Train the logistic model
+model, metrics = logistic_model.train_logistic()
 
 #TODO: Print the logistic model metrics
+print(metrics)

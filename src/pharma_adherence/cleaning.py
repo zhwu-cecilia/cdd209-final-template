@@ -86,20 +86,18 @@ def clean_prescription_data(df: pd.DataFrame) -> pd.DataFrame:
 
     #TODO: adherence_flag
     df["adherence_flag"] = _to_numeric_clean(df["adherence_flag"])
-    df.loc[~df["adherence_flag"].isin([0, 1])] = np.nan
+    df.loc[~df["adherence_flag"].isin([0, 1]), "adherence_flag"] = np.nan
 
     #TODO: proportion_days_covered (pdc)
     df["proportion_days_covered"] = _to_numeric_clean(df["proportion_days_covered"])
-    df.loc[(df["proportion_days_covered"] < 0) | (df["proportion_days_covered"] > 1)] = np.nan
-
-    #########################
+    df.loc[(df["proportion_days_covered"] < 0) | (df["proportion_days_covered"] > 1), "proportion_days_covered"] = np.nan
 
     #TODO: Drop all duplicate rows
     df = df.drop_duplicates()
 
     #TODO: Drop rows if missing critical fields: "patient_id", "fill_date", "drug_name"
     critical_cols = ["patient_id", "fill_date", "drug_name"]
-    df.dropna(subset=critical_cols)
+    df = df.dropna(subset=critical_cols)
     #TODO: Sort by "patient_id", "fill_date"
     sort_cols = ["patient_id", "fill_date"]
     df = df.sort_values(sort_cols)

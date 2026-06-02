@@ -84,10 +84,36 @@ class ModelTrainer:
         }
 
         return self.model, self.metrics
+    
     def train_logistic(self):
         #TODO: Train and evaluate a logistic model
         #      Return metrics: accuracy, precision, recall, roc_auc
-        pass
+        X = self.df[self.features]
+        y = self.df[self.target]
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=57)
+
+        preprocessor = self.build_preprocessor(X_train)
+
+        self.model = Pipeline(
+            steps=[
+                ("preprocessor", preprocessor),
+                ("classifer", LogisticRegression(max_iter=1000)),
+            ]
+        )
+
+        self.model.fit(X_train, y_train)
+        preds = self.model.predict(X_test)
+        probs = self.model.predict_proba(X_test)[:, 1]
+
+        self.metrics = {
+            "accuracy" : accuracy_score(y_test, preds),
+            "precision" : precision_score(y_test, preds, zero_division=0),
+            "recall" : recall_score(y_test, preds, zero_division=0),
+            "roc_auc" : roc_auc_score(y_test, probs),
+        }
+
+        return self.model, self.metrics
 
     def evaluate(self):
         if self.metrics is None:
