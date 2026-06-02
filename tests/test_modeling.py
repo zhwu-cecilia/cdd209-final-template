@@ -15,7 +15,7 @@ def make_linear_df():
             "age": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70],
             "days_supply": [30, 60, 30, 90, 60, 30, 90, 60, 30, 90],
             "sex": ["female", "male", "female", "male", "female", "male", "female", "male", "female", "male"],
-            "pharmacy_name": ["walgreens", "csv", "walgreens", "csv", "walgreens", "csv", "walgreens", "csv", "walgreens", "csv"],
+            "pharmacy_name": ["walgreens", "cvs", "walgreens", "cvs", "walgreens", "cvs", "walgreens", "cvs", "walgreens", "cvs"],
             "copay_amount": [10.0, 12.0, 11.0, 13.0, 12.0, 14.0, 13.0, 15.0, 14.0, 16.0],
         }
     )
@@ -27,7 +27,7 @@ def make_logistic_df():
             "age": [25, 30, 35, 40, 45, 50, 55, 60, 65, 70],
             "days_supply": [30, 60, 30, 90, 60, 30, 90, 60, 30, 90],
             "sex": ["female", "male", "female", "male", "female", "male", "female", "male", "female", "male"],
-            "pharmacy_name": ["walgreens", "csv", "walgreens", "csv", "walgreens", "csv", "walgreens", "csv", "walgreens", "csv"],
+            "pharmacy_name": ["walgreens", "cvs", "walgreens", "cvs", "walgreens", "cvs", "walgreens", "cvs", "walgreens", "cvs"],
             "adherent": [0, 1, 0, 1, 0, 1, 0, 1, 0, 1],
         }
     )

@@ -3,6 +3,7 @@ import numpy as np
 
 
 def _clean_text_series(s: pd.Series) -> pd.Series:
+    """Strip whitespace and lowercase a string Series."""
     return (
         s.astype("string")
         .str.strip()
@@ -10,6 +11,7 @@ def _clean_text_series(s: pd.Series) -> pd.Series:
     )
 
 def _clean_drug_name_series(s: pd.Series) -> pd.Series:
+    """Lowercase drug names and strip dosage (e.g. '5mg') and salt suffixes (e.g. 'hcl')."""
     return (
         _clean_text_series(s)
         .str.replace(r"\s+\d+\s*(mg|mcg|g|ml)\b", "", regex=True)
@@ -18,6 +20,7 @@ def _clean_drug_name_series(s: pd.Series) -> pd.Series:
     )
 
 def _to_numeric_clean(s: pd.Series) -> pd.Series:
+    """Extract the first number from a messy string (e.g. '$16.55', '30days'), coercing failures to NaN."""
     cleaned = (
         s.astype(str)
         .str.replace(r"[\$,]", "", regex=True)
@@ -28,6 +31,11 @@ def _to_numeric_clean(s: pd.Series) -> pd.Series:
 
 
 def clean_prescription_data(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Standardize a raw prescription DataFrame.
+    Cleans all fields, nullifies out-of-range values, drops duplicates,
+    and removes rows missing patient_id, fill_date, or drug_name.
+    """
     df = df.copy()
 
     # Standardize column names

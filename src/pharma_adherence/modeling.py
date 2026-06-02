@@ -19,7 +19,10 @@ from sklearn.model_selection import train_test_split
 
 
 class ModelTrainer:
+    """Trains and evaluates linear or logistic regression models on prescription data."""
+
     def __init__(self, df: pd.DataFrame, target: str, features: list[str]):
+        """Store the dataset, target column name, and list of feature column names."""
         self.df = df
         self.target = target
         self.features = features
@@ -60,6 +63,7 @@ class ModelTrainer:
         )
 
     def train_linear(self):
+        """Train a LinearRegression model and return (pipeline, metrics) with mse, mae, r2."""
         X = self.df[self.features]
         y = self.df[self.target]
 
@@ -86,6 +90,7 @@ class ModelTrainer:
         return self.model, self.metrics
     
     def train_logistic(self):
+        """Train a LogisticRegression model and return (pipeline, metrics) with accuracy, precision, recall, roc_auc."""
         #TODO: Train and evaluate a logistic model
         #      Return metrics: accuracy, precision, recall, roc_auc
         X = self.df[self.features]
@@ -116,6 +121,7 @@ class ModelTrainer:
         return self.model, self.metrics
 
     def evaluate(self):
+        """Return the metrics dict from the last trained model; raises if no model has been trained."""
         if self.metrics is None:
             raise ValueError("No metrics available yet. Train a model first.")
         return self.metrics
